@@ -4,6 +4,10 @@
     command: lvextend --extents +100%FREE /dev/ev3devVG/root /dev/mmcblk0p3
     ignore_errors: yes
 
+# had a WARNING: Duplicate VG name ev3devVG
+# vgreduce --removemissing --force ev3devVG
+# vgrename
+
   - name: resize the file system to fill the logical volume
     command: resize2fs /dev/ev3devVG/root
 
