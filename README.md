@@ -118,7 +118,7 @@ Install ansible on your desktop machine using http://docs.ansible.com/intro_inst
         tar xzf sshpass.tar.gz && cd sshpass-1.05
         ./configure && make
         sudo make install
-        cd .. && rm -fr sshpass-*
+        cd .. && rm -fr sshpass*
 
 ## Setup Access Point
 
