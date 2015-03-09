@@ -7,4 +7,28 @@
     copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/ap.conf
     notify: restart dnsmasq
 
-#   service: name=dnsmasq enabled=yes
+  - name: configure connman to not control the WiFi devices
+    replace: dest=/etc/connman/main.conf regexp='^# (NetworkInterfaceBlacklist((?!,wlan).)*)$' replace='\1,wlan'
+    notify: restart connman
+
+  - name: configure connman to not rfkill the WiFi devices
+    replace: dest=/var/lib/connman/settings regexp='^(\[WiFi\]\nEnable=)false' replace='\1true'
+    notify: restart connman
+
+  - name: install hostapd
+    apt: name=hostapd
+
+  - name: ensure hostapd starts after connman
+    replace: dest=/etc/init.d/hostapd regexp='^(# Required-Start.*remote_fs)$' replace='\1 connman'
+    notify: re-enable hostapd
+
+  - name: add hostapd configuration file
+    template: src=hostapd.conf dest=/etc/hostapd/hostapd.conf
+    notify: restart hostapd
+
+  - name: point hostapd at configuration
+    replace: dest=/etc/default/hostapd regexp='^#(DAEMON_CONF=")(")$' replace='\1/etc/hostapd/hostapd.conf\2'
+    notify: restart hostapd
+
+  - name: configure wlan0 interface with a static IP address
+    copy: src=wlan0.interface dest=/etc/network/interfaces.d/wlan0

@@ -1,3 +1,18 @@
 ---
 - name: restart dnsmasq
   service: name=dnsmasq state=restarted
+
+- name: restart connman
+  service: name=connman state=restarted
+  notify: restart hostapd
+
+# This is done to update-rc.d the init scripts to start after connman
+- name: re-enable hostapd
+  service: name=hostapd enabled=no
+  notify: enable hostapd
+
+- name: enable hostapd
+  service: name=hostapd enabled=yes
+
+- name: restart hostapd
+  service: name=hostapd state=restarted
