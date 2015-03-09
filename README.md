@@ -47,7 +47,7 @@ ev3dev.org Getting Started instructions from http://www.ev3dev.org/docs/getting-
 
         # TRIPLE CHECK that the disk number is correct before running this!
         # if you have an external drive, for example, it may be rdisk2!!!
-        sudo dd if=~/Downloads/ev3dev-jessie-2014-12-01.img of=/dev/rdisk1 bs=4m
+        sudo dd if=~/Downloads/ev3dev-jessie-2015-02-24.img of=/dev/rdisk1 bs=4m
 
    3. Eject card, insert into EV3 and power on using centre button
 
@@ -61,7 +61,7 @@ http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-mac/
 
         Select:
 
-        USB -> CDC (Inactive)
+        Wireless and Networks -> USB -> CDC (Inactive)
 
         to make it go Active; then select
 
@@ -76,7 +76,7 @@ http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-mac/
 
    7. Now configure the EV3's connection manager
 
-        Network -> Manage Connections... -> Wired
+        Wireless and Networks -> All Network Connections -> Wired
         /IPv4\
         [Change...]
         [Load Mac Defaults]
@@ -84,7 +84,7 @@ http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-mac/
         [Connect]
         Connect automatically [*]
 
-   8. Check the IP address in the top left of the screen and then, in a Terminal window on the Mac
+   8. Check the IP address in the `/IPv4\` tab and then, in a Terminal window on the Mac
 
         ssh root@192.168.2.3
         password: r00tme
