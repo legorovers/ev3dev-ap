@@ -2,28 +2,24 @@
 
   - name: extend logical volume to fill the card
     command: lvextend --extents +100%FREE /dev/ev3devVG/root /dev/mmcblk0p3
-    ignore_errors: yes
-
-# had a WARNING: Duplicate VG name ev3devVG
-# vgreduce --removemissing --force ev3devVG
-# vgrename
+    register: lvextend_result
+    failed_when: not (lvextend_result.rc == 0 or "'No free extents' in lvextend_result.stderr")
+    changed_when: "'No free extents' not in lvextend_result.stderr"
 
   - name: resize the file system to fill the logical volume
     command: resize2fs /dev/ev3devVG/root
+    register: resize2fs_result
+    changed_when: "'Nothing to do!' not in resize2fs_result.stderr"
 
   - name: apt-get update and upgrade the libdbus package (seems to need to be done first)
     apt: name=libdbus-1-3 update_cache=yes
 
-#  - name: install aptitude so that ansible can run apt-get upgrade
-#    apt: name=aptitude
-
-#  - name: apt-get upgrade
-#    apt: upgrade=yes
-
   - name: upgrade packages to latest
     command: apt-get upgrade -y
-
 
   - name: apt-get dist-upgrade
     apt: upgrade=dist
     notify: reboot
+
+  - name: trigger reboot
+    meta: flush_handlers
