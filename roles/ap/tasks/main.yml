@@ -1,11 +1,11 @@
 ---
 
-  - name: install dnsmasq
-    apt: name=dnsmasq
+  - name: create connman override directory
+    file: dest=/etc/systemd/system/connman.service.d state=directory
 
-  - name: configure dnsmasq to provide DHCP access (we disable DNS so that it doesn't clash with connman's)
-    copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/ap.conf
-    notify: restart dnsmasq
+  - name: configure connman to not do DNS
+    copy: src=connman.conf dest=/etc/systemd/system/connman.service.d/no_dns_proxy.conf
+    notify: restart connman
 
   - name: configure connman to not control the WiFi devices
     replace: dest=/etc/connman/main.conf regexp='^# (NetworkInterfaceBlacklist((?!,wlan).)*)$' replace='\1,wlan'
@@ -14,6 +14,15 @@
   - name: configure connman to not rfkill the WiFi devices
     replace: dest=/var/lib/connman/settings regexp='^(\[WiFi\]\nEnable=)false' replace='\1true'
     notify: restart connman
+
+
+  - name: install dnsmasq
+    apt: name=dnsmasq
+
+  - name: configure dnsmasq to provide DHCP access and upstream DNS
+    copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/dhcp.conf
+    notify: restart dnsmasq
+
 
   - name: install hostapd
     apt: name=hostapd

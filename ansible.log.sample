@@ -1,0 +1,58 @@
+2015-03-10 19:07:44,094 p=15291 u=andy |   
+2015-03-10 19:07:44,094 p=15291 u=andy |  /usr/local/bin/ansible-playbook -i hosts ev3dev.yml
+2015-03-10 19:07:44,094 p=15291 u=andy |   
+2015-03-10 19:07:44,140 p=15291 u=andy |  PLAY [192.168.2.3] ************************************************************ 
+2015-03-10 19:07:44,141 p=15291 u=andy |  GATHERING FACTS *************************************************************** 
+2015-03-10 19:07:59,600 p=15291 u=andy |  ok: [192.168.2.3]
+2015-03-10 19:07:59,600 p=15291 u=andy |  TASK: [setup | extend logical volume to fill the card] ************************ 
+2015-03-10 19:08:05,011 p=15291 u=andy |  ok: [192.168.2.3]
+2015-03-10 19:08:05,011 p=15291 u=andy |  TASK: [setup | resize the file system to fill the logical volume] ************* 
+2015-03-10 19:08:10,509 p=15291 u=andy |  ok: [192.168.2.3]
+2015-03-10 19:08:10,509 p=15291 u=andy |  TASK: [setup | apt-get update and upgrade the libdbus package (seems to need to be done first)] *** 
+2015-03-10 19:18:55,815 p=15291 u=andy |  ERROR: interrupted
+2015-03-11 06:38:38,330 p=16368 u=andy |   
+2015-03-11 06:38:38,333 p=16368 u=andy |  /usr/local/bin/ansible-playbook -i hosts ev3dev.yml
+2015-03-11 06:38:38,333 p=16368 u=andy |   
+2015-03-11 06:38:38,385 p=16368 u=andy |  PLAY [192.168.2.3] ************************************************************ 
+2015-03-11 06:38:38,386 p=16368 u=andy |  GATHERING FACTS *************************************************************** 
+2015-03-11 06:38:53,965 p=16368 u=andy |  ok: [192.168.2.3]
+2015-03-11 06:38:53,965 p=16368 u=andy |  TASK: [setup | extend logical volume to fill the card] ************************ 
+2015-03-11 06:38:59,588 p=16368 u=andy |  ok: [192.168.2.3]
+2015-03-11 06:38:59,588 p=16368 u=andy |  TASK: [setup | resize the file system to fill the logical volume] ************* 
+2015-03-11 06:39:05,213 p=16368 u=andy |  ok: [192.168.2.3]
+2015-03-11 06:39:05,213 p=16368 u=andy |  TASK: [setup | apt-get update and upgrade the libdbus package (seems to need to be done first)] *** 
+2015-03-11 06:54:56,560 p=16368 u=andy |  ok: [192.168.2.3]
+2015-03-11 06:54:56,560 p=16368 u=andy |  TASK: [setup | upgrade packages to latest] ************************************ 
+2015-03-11 08:27:53,467 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:27:53,470 p=16368 u=andy |  TASK: [setup | apt-get dist-upgrade] ****************************************** 
+2015-03-11 08:28:46,902 p=16368 u=andy |  ok: [192.168.2.3]
+2015-03-11 08:28:46,903 p=16368 u=andy |  TASK: [ap | install dnsmasq] ************************************************** 
+2015-03-11 08:33:21,150 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:33:21,150 p=16368 u=andy |  TASK: [ap | configure dnsmasq to provide DHCP access (we disable DNS so that it doesn't clash with connman's)] *** 
+2015-03-11 08:33:27,303 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:33:27,303 p=16368 u=andy |  TASK: [ap | configure connman to not control the WiFi devices] **************** 
+2015-03-11 08:33:32,046 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:33:32,047 p=16368 u=andy |  TASK: [ap | configure connman to not rfkill the WiFi devices] ***************** 
+2015-03-11 08:33:36,755 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:33:36,756 p=16368 u=andy |  TASK: [ap | install hostapd] ************************************************** 
+2015-03-11 08:36:30,617 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:36:30,618 p=16368 u=andy |  TASK: [ap | ensure hostapd starts after connman] ****************************** 
+2015-03-11 08:36:36,262 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:36:36,262 p=16368 u=andy |  TASK: [ap | add hostapd configuration file] *********************************** 
+2015-03-11 08:36:41,413 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:36:41,414 p=16368 u=andy |  TASK: [ap | point hostapd at configuration] *********************************** 
+2015-03-11 08:36:46,088 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:36:46,088 p=16368 u=andy |  TASK: [ap | configure wlan0 interface with a static IP address] *************** 
+2015-03-11 08:36:51,403 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:36:51,403 p=16368 u=andy |  NOTIFIED: [ap | restart dnsmasq] ********************************************** 
+2015-03-11 08:37:15,389 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:37:15,389 p=16368 u=andy |  NOTIFIED: [ap | restart connman] ********************************************** 
+2015-03-11 08:37:41,855 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:37:41,855 p=16368 u=andy |  NOTIFIED: [ap | re-enable hostapd] ******************************************** 
+2015-03-11 08:37:58,913 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:37:58,914 p=16368 u=andy |  NOTIFIED: [ap | enable hostapd] *********************************************** 
+2015-03-11 08:38:16,322 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:38:16,322 p=16368 u=andy |  NOTIFIED: [ap | restart hostapd] ********************************************** 
+2015-03-11 08:38:41,218 p=16368 u=andy |  changed: [192.168.2.3]
+2015-03-11 08:38:41,219 p=16368 u=andy |  PLAY RECAP ******************************************************************** 
+2015-03-11 08:38:41,219 p=16368 u=andy |  192.168.2.3                : ok=20   changed=15   unreachable=0    failed=0   
