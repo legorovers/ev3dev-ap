@@ -57,22 +57,20 @@ ev3dev.org Getting Started instructions from http://www.ev3dev.org/docs/getting-
 Set up networking over the micro-USB cable, following
 http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-mac/
 
-   4. Wait for lights to go green and then set up USB networking
+   4. Wait for lights to go green and then set up USB networking in brickman
 
         Select:
 
         Wireless and Networks -> USB -> CDC (Inactive)
 
-        to make it go Active; then select
-
-        Network -> Gadget
+        to make it go Active
 
    5. Plug the micro-USB cable into the EV3 and the USB into your Mac and go to the Network in Preferences
 
         (+) Add a CDC Composite Gadget (en4 or similar) and give it the Service Name ev3dev
         [OK] and [Apply]
 
-   6. Now enable Internet Sharing for the CDC Composite Gadget and [Start] as described in step (7) of the Mac instructions
+   6. Now enable Internet Sharing for the CDC Composite Gadget and [Start] as described in step (7) of the ev3dev Mac instructions
 
    7. Now configure the EV3's connection manager
 
@@ -88,8 +86,11 @@ http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-mac/
 
         ssh root@192.168.2.3
         password: r00tme
+        reboot
 
-      You need to do this to add the remote host's key to your known_hosts file.
+      (Press `<ENTER>`, `~` then `.` to close the ssh session.)
+
+      You need to do this to add the remote host's key to your `known_hosts` file and for the system to spot that the logical volume has been extended.
 
 Note that if you see `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`
 it's probably because you've previously ssh'd into a different SD card image

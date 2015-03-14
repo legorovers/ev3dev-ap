@@ -1,11 +1,5 @@
 ---
 
-  - name: extend logical volume to fill the card
-    command: lvextend --extents +100%FREE /dev/ev3devVG/root /dev/mmcblk0p3
-    register: lvextend_result
-    failed_when: not (lvextend_result.rc == 0 or "'No free extents' in lvextend_result.stderr")
-    changed_when: "'No free extents' not in lvextend_result.stderr"
-
   - name: resize the file system to fill the logical volume
     command: resize2fs /dev/ev3devVG/root
     register: resize2fs_result
