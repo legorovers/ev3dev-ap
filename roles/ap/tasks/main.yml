@@ -19,7 +19,7 @@
   - name: install dnsmasq
     apt: name=dnsmasq
 
-  - name: configure dnsmasq to provide DHCP access and upstream DNS
+  - name: configure dnsmasq to provide DHCP access
     copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/dhcp.conf
     notify: restart dnsmasq
 
