@@ -3,8 +3,8 @@
   vars:
     ssid: WebRover1
     wpa_passphrase: testtest
-    max_clients: 200
   roles:
     - setup
     - ap
     - portal
+    - python
