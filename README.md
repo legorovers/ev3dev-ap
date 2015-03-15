@@ -123,9 +123,13 @@ Install ansible on your desktop machine using http://docs.ansible.com/intro_inst
 
 ## Setup Access Point
 
+Configure and run the ansible script to set up your ev3 as an access point.
 
-ansible-playbook -i hosts ev3dev.yml
+   1. Edit the SSID and password vars in the `ev3dev.yml` file
 
+   2. Run
+
+        ansible-playbook -i hosts ev3dev.yml
 
 
 Note that if you see `SSH encountered an unknown error during the connection.`
