@@ -1,5 +1,13 @@
 ---
 
+  - name: check the swap partition entry is in fstab
+    # see https://github.com/ev3dev/ev3dev/issues/267
+    lineinfile: dest=/etc/fstab line="/dev/mapper/ev3devVG-swap none            swap   sw                                  0      0"
+    notify: activate swap
+
+  - name: activate swap (if necessary)
+    meta: flush_handlers
+
   - name: resize the file system to fill the logical volume
     command: resize2fs /dev/ev3devVG/root
     register: resize2fs_result
@@ -16,5 +24,5 @@
     apt: upgrade=dist
     notify: reboot
 
-  - name: trigger reboot
+  - name: trigger reboot (if necessary)
     meta: flush_handlers
