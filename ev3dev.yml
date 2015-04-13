@@ -6,5 +6,6 @@
   roles:
     - setup
     - ap
-    - portal
-    - python
+    #- portal   # creating a captive portal (untested)
+    #- python   # install an ev3_py27 virtualenv with python control
+    #- ros      # install a ROS.org node (incomplete)

@@ -1,0 +1,63 @@
+---
+
+  # Roughly following https://github.com/moriarty/ros-ev3/blob/master/brickstrap-build-status.md
+
+  - apt: name=apt-utils #update_cache=yes
+  - apt: name=build-essential
+  - apt: name=cmake
+  - apt: name=initramfs-tools
+  - apt: name=libboost-all-dev
+  - apt: name=libboost-dev
+  - apt: name=libbz2-dev
+  - apt: name=libc6-dev
+  - apt: name=libconsole-bridge-dev
+  - apt: name=libgtest-dev
+  - apt: name=liblog4cxx10
+  - apt: name=liblog4cxx10-dev
+  - apt: name=liblz4-dev
+  - apt: name=libtinyxml-dev
+  - apt: name=libpython2.7-stdlib
+  - apt: name=libyaml-cpp-dev
+  - apt: name=libyaml-dev
+  - apt: name=python-coverage
+  - apt: name=python-empy
+  - apt: name=python-imaging
+  - apt: name=python-mock
+  - apt: name=python-netifaces
+  - apt: name=python-nose
+  - apt: name=python-numpy
+  - apt: name=python-paramiko
+  - apt: name=python-pip
+  - apt: name=python-yaml
+
+  - name: create ros_py27 virtualenv
+    shell: . /usr/share/virtualenvwrapper/virtualenvwrapper.sh; mkvirtualenv ros_py27 --python=/usr/bin/python2.7 --system-site-packages
+      creates=/root/.virtualenvs/ros_py27
+    args:
+      executable: /bin/bash
+    register: mkvirtualenv_result
+    failed_when: mkvirtualenv_result.rc != 1
+
+  - pip: name=rosdep virtualenv=/root/.virtualenvs/ros_py27
+  - pip: name=rosinstall_generator virtualenv=/root/.virtualenvs/ros_py27
+  - pip: name=wstool virtualenv=/root/.virtualenvs/ros_py27
+  - pip: name=rosinstall virtualenv=/root/.virtualenvs/ros_py27
+  - pip: name=catkin_pkg virtualenv=/root/.virtualenvs/ros_py27
+  - pip: name=rospkg virtualenv=/root/.virtualenvs/ros_py27
+
+  - get_url: url=http://netcologne.dl.sourceforge.net/project/sbcl/sbcl/1.2.7/sbcl-1.2.7-armel-linux-binary.tar.bz2 dest=/tmp/sbcl.tar.bz2
+  - unarchive: src=/tmp/sbcl.tar.bz2 dest=/tmp copy=no
+  - shell: INSTALL_ROOT=/usr/local sh install.sh
+      chdir=/tmp/sbcl-1.2.7-armel-linux
+      creates=/usr/local/bin/sbcl
+
+  - name: rosdep init
+    shell: . /root/.virtualenvs/ros_py27/bin/activate; rosdep init
+      executable=/bin/bash
+      creates=/etc/ros/rosdep/sources.list.d/20-default.list
+
+  - name: rosdep update
+    shell: . /root/.virtualenvs/ros_py27/bin/activate; rosdep update
+      executable=/bin/bash
+      creates=/root/.ros/rosdep/sources.cache #?
+
