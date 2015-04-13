@@ -137,7 +137,8 @@ it's probably because you've previously ssh'd into a different SD card image
 at the same IP address.  Run with `-vvvv`, as it suggests, to check and then
 delete that line from your `~/.ssh/known_hosts` file.
 
+If you need to modify the wifi SSID, password, country or channel after install
+then edit the `hostapd` configuration and restart it
 
-
-
-
+    vi /etc/hostapd/hostapd.conf
+    service hostapd restart
