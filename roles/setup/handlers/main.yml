@@ -1,11 +1,10 @@
 ---
-  - name: activate swap
-    shell: mkswap -f /dev/mapper/ev3devVG-swap; swapon /dev/mapper/ev3devVG-swap
 
   - name: reboot
     command: shutdown -r now "Reboot triggered by Ansible"
     async: 0
     poll: 0
+    sudo: yes
     ignore_errors: true
     notify: wait for restart
 

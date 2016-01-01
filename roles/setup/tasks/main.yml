@@ -1,27 +1,12 @@
 ---
 
-  - name: check the swap partition entry is in fstab
-    # see https://github.com/ev3dev/ev3dev/issues/267
-    lineinfile: dest=/etc/fstab line="/dev/mapper/ev3devVG-swap none            swap   sw                                  0      0"
-    notify: activate swap
-
-  - name: activate swap (if necessary)
-    meta: flush_handlers
-
-  - name: resize the file system to fill the logical volume
-    command: resize2fs /dev/ev3devVG/root
-    register: resize2fs_result
-    changed_when: "'Nothing to do!' not in resize2fs_result.stderr"
-
-  - name: apt-get update and upgrade the libdbus package (~15m)
-    # libdbus seems to need to be done first
-    apt: name=libdbus-1-3 update_cache=yes
-
   - name: upgrade packages to latest (~1h20m)
-    command: apt-get upgrade -y
+    apt: upgrade=full update_cache=yes
+    sudo: yes
 
   - name: apt-get dist-upgrade
     apt: upgrade=dist
+    sudo: yes
     notify: reboot
 
   - name: trigger reboot (if necessary)

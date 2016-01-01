@@ -1,18 +1,23 @@
 ---
 - name: restart dnsmasq
   service: name=dnsmasq state=restarted
+  sudo: yes
 
 - name: restart connman
   service: name=connman state=restarted
+  sudo: yes
   notify: restart hostapd
 
 # This is done to update-rc.d the init scripts to start after connman
 - name: re-enable hostapd
   service: name=hostapd enabled=no
+  sudo: yes
   notify: enable hostapd
 
 - name: enable hostapd
   service: name=hostapd enabled=yes
+  sudo: yes
 
 - name: restart hostapd
   service: name=hostapd state=restarted
+  sudo: yes

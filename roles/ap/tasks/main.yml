@@ -2,42 +2,53 @@
 
   - name: create connman override directory
     file: dest=/etc/systemd/system/connman.service.d state=directory
+    sudo: yes
 
   - name: configure connman to not do DNS
     copy: src=connman.conf dest=/etc/systemd/system/connman.service.d/no_dns_proxy.conf
+    sudo: yes
     notify: restart connman
 
   - name: configure connman to not control the WiFi devices
     replace: dest=/etc/connman/main.conf regexp='^# (NetworkInterfaceBlacklist((?!,wlan).)*)$' replace='\1,wlan'
+    sudo: yes
     notify: restart connman
 
   - name: configure connman to not rfkill the WiFi devices
     replace: dest=/var/lib/connman/settings regexp='^(\[WiFi\]\nEnable=)false' replace='\1true'
+    sudo: yes
     notify: restart connman
 
 
   - name: install dnsmasq
     apt: name=dnsmasq
+    sudo: yes
 
   - name: configure dnsmasq to provide DHCP access
     copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/dhcp.conf
+    sudo: yes
     notify: restart dnsmasq
 
 
   - name: install hostapd
     apt: name=hostapd
+    sudo: yes
 
   - name: ensure hostapd starts after connman
     replace: dest=/etc/init.d/hostapd regexp='^(# Required-Start.*remote_fs)$' replace='\1 connman'
+    sudo: yes
     notify: re-enable hostapd
 
   - name: add hostapd configuration file
     template: src=hostapd.conf dest=/etc/hostapd/hostapd.conf
+    sudo: yes
     notify: restart hostapd
 
   - name: point hostapd at configuration
     replace: dest=/etc/default/hostapd regexp='^#(DAEMON_CONF=")(")$' replace='\1/etc/hostapd/hostapd.conf\2'
+    sudo: yes
     notify: restart hostapd
 
   - name: configure wlan0 interface with a static IP address
     copy: src=wlan0.interface dest=/etc/network/interfaces.d/wlan0
+    sudo: yes

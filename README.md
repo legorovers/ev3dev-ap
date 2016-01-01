@@ -5,10 +5,10 @@ that will make a Lego Mindstorms EV3 robot and a Netgear WBNA1100 WiFi dongle
 act as a standalone access point that a tablet or laptop can connect to.
 
 This is useful for demos or classroom activities where the overhead of having
-to connect to a local WiFi network is not required.  Obviously, neither the
-EV3 or the tablet/latop can connect to the internet when this approach is used
--- although the EV3 can make use of the micro-USB cable CDC connection to do
-this when necessary.
+to connect to a local WiFi network is too much.  Obviously, neither the  EV3 or
+the tablet/latop can connect to the internet when this approach is used --
+although the EV3 can make use of the micro-USB cable CDC connection to do this
+when necessary.
 
 Firstly here are some manual steps to create the base SD card image and to set
 up the CDC network connection.  The rest is automatically provisioned using an
@@ -26,7 +26,7 @@ The manual steps are largely based on following the Mac version of the
 ev3dev.org Getting Started instructions from http://www.ev3dev.org/docs/getting-started/ .
 
    1. Download the image file
-      https://github.com/ev3dev/ev3dev/releases/download/ev3dev-jessie-2015-02-24/ev3dev-jessie-2015-02-24.img.zip
+      https://github.com/ev3dev/ev3dev/releases/download/ev3dev-jessie-2015-12-30/ev3-ev3dev-jessie-2015-12-30.img.zip
 
    2. Copy to the SD card (on a Mac) following http://www.ev3dev.org/docs/tutorials/writing-sd-card-image-mac-command-line/
 
@@ -47,7 +47,7 @@ ev3dev.org Getting Started instructions from http://www.ev3dev.org/docs/getting-
 
         # TRIPLE CHECK that the disk number is correct before running this!
         # if you have an external drive, for example, it may be rdisk2!!!
-        sudo dd if=~/Downloads/ev3dev-jessie-2015-02-24.img of=/dev/rdisk1 bs=4m
+        sudo dd if=~/Downloads/ev3-ev3dev-jessie-2015-12-30.img of=/dev/rdisk1 bs=4m
 
    3. Eject card, insert into EV3 and power on using centre button
 
@@ -55,38 +55,39 @@ ev3dev.org Getting Started instructions from http://www.ev3dev.org/docs/getting-
 ## Connect the EV3
 
 Set up networking over the micro-USB cable, following
-http://www.ev3dev.org/docs/tutorials/setting-up-ethernet-over-usb-on-mac/
+http://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/?tabs-0=mac-os-x
 
-   4. Wait for lights to go green and then set up USB networking in brickman
+   4. Wait for lights to go green and plug the micro-USB cable into the EV3 and
+   the USB into your Mac and go to the Network in Preferences
 
-        Select:
+        (+) Add the EV3+ev3dev Interface and give it the Service Name ev3dev
+        [OK]
 
-        Wireless and Networks -> USB -> CDC (Inactive)
+   5. Adjust the settings to:
 
-        to make it go Active
+        Configure IPv4: Manually
+        IP Address:  192.168.2.2
+        Subnet Mask: 255.255.255.0
+        Router:      192.168.2.1
 
-   5. Plug the micro-USB cable into the EV3 and the USB into your Mac and go to the Network in Preferences
+      and [Apply]
 
-        (+) Add a CDC Composite Gadget (en4 or similar) and give it the Service Name ev3dev
-        [OK] and [Apply]
-
-   6. Now enable Internet Sharing for the CDC Composite Gadget and [Start] as described in step (7) of the ev3dev Mac instructions
+   6. Now enable Internet Sharing for the EV3+ev3dev interface and [Start] as described in step (4) of the ev3dev Mac instructions
 
    7. Now configure the EV3's connection manager
 
         Wireless and Networks -> All Network Connections -> Wired
-        /IPv4\
+        -> IPv4
         [Change...]
-        [Load Mac Defaults]
-        /Conn.\
-        [Connect]
-        Connect automatically [*]
+        [Load OSX defaults]
+        -> Connect
+        -> Connect automatically [*]
 
-   8. Check the IP address in the `/IPv4\` tab and then, in a Terminal window on the Mac
+   8. Check the IP address shown in the top-left of the brickman UI and then, in a Terminal window on the Mac
 
-        ssh root@192.168.2.3
-        password: r00tme
-        reboot
+        ssh robot@192.168.2.3
+        password: maker
+        sudo reboot
 
       (Press `<ENTER>`, `~` then `.` to close the ssh session.)
 
