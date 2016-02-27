@@ -63,27 +63,28 @@ http://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/?tabs-0=
         (+) Add the EV3+ev3dev Interface and give it the Service Name ev3dev
         [OK]
 
-   5. Adjust the settings to:
+   5. Now enable Internet Sharing for the EV3+ev3dev interface and [Start] as
+   described in step (4) of the ev3dev Mac instructions
 
-        Configure IPv4: Manually
-        IP Address:  192.168.2.2
-        Subnet Mask: 255.255.255.0
-        Router:      192.168.2.1
+      You may not have to do this every time, as your Mac will remember if you
+      use the same USB port.
 
-      and [Apply]
-
-   6. Now enable Internet Sharing for the EV3+ev3dev interface and [Start] as described in step (4) of the ev3dev Mac instructions
-
-   7. Now configure the EV3's connection manager
+   6. Now configure the EV3's connection manager
 
         Wireless and Networks -> All Network Connections -> Wired
-        -> IPv4
-        [Change...]
-        [Load OSX defaults]
         -> Connect
         -> Connect automatically [*]
 
-   8. Check the IP address shown in the top-left of the brickman UI and then, in a Terminal window on the Mac
+   7. If the robot does not show its State as Online, then you may need to
+   reboot your Mac.  It appears that internet sharing in OS X can be very
+   flakey and sometimes bootp or the DNS service don't come up or are not
+   accessible (see http://apple.stackexchange.com/a/126229 for more info).
+
+      Later versions of Mac OS X may also have trouble here.  See
+      https://github.com/ev3dev/ev3dev/issues/471 for workarounds.
+
+   8. Check the IP address shown in the top-left of the brickman UI and then,
+   in a Terminal window on the Mac
 
         ssh robot@ev3dev.local
         password: maker
@@ -91,12 +92,14 @@ http://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/?tabs-0=
 
       (Press `<ENTER>`, `~` then `.` to close the ssh session.)
 
-      You need to do this to add the remote host's key to your `known_hosts` file and for the system to spot that the logical volume has been extended.
+      You need to do this to add the remote host's key to your `known_hosts` file
+      and for the system to spot that the logical volume has been extended.
 
 Note that if you see `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`
 it's probably because you've previously ssh'd into a different SD card image
 at the same IP address.  Delete the line from your `~/.ssh/known_hosts` file
 as it suggests.
+
 
 ## Install Ansible
 
@@ -121,6 +124,10 @@ Install ansible on your desktop machine using http://docs.ansible.com/intro_inst
         ./configure && make
         sudo make install
         cd .. && rm -fr sshpass*
+
+These are one off steps, and if you have done them before you won't need to
+repeat them.
+
 
 ## Setup Access Point
 
