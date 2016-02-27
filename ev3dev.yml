@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.2.3
+- hosts: ev3dev.local
   vars:
     ssid: WebRover1
     wpa_passphrase: testtest
@@ -7,5 +7,5 @@
     - setup
     - ap
     #- portal   # creating a captive portal (untested)
-    #- python   # install an ev3_py27 virtualenv with python control
+    - python   # install an ev3_py27 virtualenv with python control
     #- ros      # install a ROS.org node (incomplete)

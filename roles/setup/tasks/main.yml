@@ -1,7 +1,11 @@
 ---
 
+  - name: apt-get update (~15m)
+    apt: update_cache=yes
+    sudo: yes
+
   - name: upgrade packages to latest (~1h20m)
-    apt: upgrade=full update_cache=yes
+    command: apt-get upgrade -y
     sudo: yes
 
   - name: apt-get dist-upgrade

@@ -4,26 +4,36 @@
 
   - name: apt-get virtualenv
     apt: name=virtualenv
+    sudo: yes
 
   - name: apt-get virtualenvwrapper (workon)
     apt: name=virtualenvwrapper
+    sudo: yes
 
   - name: apt-get python-setuptools
     apt: name=python-setuptools
+    sudo: yes
 
   - name: apt-get python-smbus
     apt: name=python-smbus
+    sudo: yes
 
   - name: apt-get python-pil
     apt: name=python-pil
+    sudo: yes
 
   - name: create ev3_py27 virtualenv
     shell: . /usr/share/virtualenvwrapper/virtualenvwrapper.sh; mkvirtualenv ev3_py27 --python=/usr/bin/python2.7 --system-site-packages
       creates=/root/.virtualenvs/ev3_py27
     args:
       executable: /bin/bash
+    sudo: yes
     register: mkvirtualenv_result
     failed_when: mkvirtualenv_result.rc != 1
 
   - name: easy_install python-ev3
     easy_install: name=python-ev3 virtualenv=/root/.virtualenvs/ev3_py27
+    sudo: yes
+
+  - name: apt-get git
+    apt: name=git

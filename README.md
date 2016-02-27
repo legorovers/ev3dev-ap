@@ -85,7 +85,7 @@ http://www.ev3dev.org/docs/tutorials/connecting-to-the-internet-via-usb/?tabs-0=
 
    8. Check the IP address shown in the top-left of the brickman UI and then, in a Terminal window on the Mac
 
-        ssh robot@192.168.2.3
+        ssh robot@ev3dev.local
         password: maker
         sudo reboot
 
