@@ -2,4 +2,5 @@
 
   - name: configure dnsmasq to redirect all requests to us (captive portal)
     copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/portal.conf
+    sudo: yes
     notify: restart dnsmasq

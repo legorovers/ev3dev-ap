@@ -6,7 +6,7 @@
   roles:
     - setup
     - ap
-    #- portal   # creating a captive portal (untested)
-    - python   # install an ev3_py27 virtualenv with python control
-    - web      # install lego rovers web server software
-    #- ros      # install a ROS.org node (incomplete)
+    - portal      # creating a captive portal (untested)
+    - python      # install an ev3_py27 virtualenv with python control
+    - webrover1   # install webrover1 server software
+    #- ros         # install a ROS.org node (incomplete)
