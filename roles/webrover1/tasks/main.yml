@@ -1,0 +1,24 @@
+---
+
+  - name: apt-get git
+    apt: name=git
+    sudo: yes
+
+  - name: apt-get python-openssl
+    apt: name=python-openssl
+    sudo: yes
+
+  - name: create ev3_py27 virtualenv
+    shell: . /usr/share/virtualenvwrapper/virtualenvwrapper.sh; mkvirtualenv webrover1 --python=/usr/bin/python2.7 --system-site-packages
+      creates=/home/robot/.virtualenvs/webrover1
+    args:
+      executable: /bin/bash
+    register: mkvirtualenv_result
+    failed_when: mkvirtualenv_result.rc != 1 and 'skipped' not in mkvirtualenv_result.stdout
+
+  - name: clone the lego rovers website repo
+    git: repo=https://github.com/legorovers/legoflask.git
+       dest=/home/robot/webrover1
+
+  - name: install website python requirements
+    pip: requirements=/home/robot/webrover1/requirements.txt virtualenv=/home/robot/.virtualenvs/webrover1
