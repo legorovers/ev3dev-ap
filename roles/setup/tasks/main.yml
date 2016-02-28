@@ -1,7 +1,7 @@
 ---
 
-  - name: apt-get update (~15m)
-    apt: update_cache=yes
+  - name: apt-get update (~15m if not done in the last day)
+    apt: update_cache=yes cache_valid_time=86400
     sudo: yes
 
   - name: upgrade packages to latest (~1h20m)
