@@ -24,17 +24,11 @@
 
   - name: create ev3_py27 virtualenv
     shell: . /usr/share/virtualenvwrapper/virtualenvwrapper.sh; mkvirtualenv ev3_py27 --python=/usr/bin/python2.7 --system-site-packages
-      creates=/root/.virtualenvs/ev3_py27
+      creates=/home/robot/.virtualenvs/ev3_py27
     args:
       executable: /bin/bash
-    sudo: yes
     register: mkvirtualenv_result
     failed_when: mkvirtualenv_result.rc != 1 and 'skipped' not in mkvirtualenv_result.stdout
 
   - name: easy_install python-ev3
-    easy_install: name=python-ev3 virtualenv=/root/.virtualenvs/ev3_py27
-    sudo: yes
-
-  - name: apt-get git
-    apt: name=git
-    sudo: yes
+    easy_install: name=python-ev3 virtualenv=/home/robot/.virtualenvs/ev3_py27
