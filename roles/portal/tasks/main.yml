@@ -1,6 +1,13 @@
----
+- name: configure dnsmasq to redirect all requests to us (captive portal)
+  copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/portal.conf
+  sudo: yes
+  notify: restart dnsmasq
 
-  - name: configure dnsmasq to redirect all requests to us (captive portal)
-    copy: src=dnsmasq.conf dest=/etc/dnsmasq.d/portal.conf
-    sudo: yes
-    notify: restart dnsmasq
+- name: add legorover.space hostname to /etc/hosts (matches our SSL cert)
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    regexp: "^10.0.0.1"
+    line: "10.0.0.1        legorover.space"
+  sudo: yes
+  notify: restart dnsmasq
