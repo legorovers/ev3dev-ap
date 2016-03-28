@@ -22,6 +22,11 @@
     apt: name=python-pil
     sudo: yes
 
+  # for socketio
+  - name: apt-get python-greenlet-dev
+    apt: name=python-greenlet-dev
+    sudo: yes
+
   - name: easy_install python-ev3dev
     easy_install: name=python-ev3dev
     sudo: yes
