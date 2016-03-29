@@ -14,19 +14,22 @@
     apt: name=python-setuptools
     sudo: yes
 
+  # system management bus for access to ev3 sensors
   - name: apt-get python-smbus
     apt: name=python-smbus
     sudo: yes
 
+  # python image library, used by ev3dev
   - name: apt-get python-pil
     apt: name=python-pil
     sudo: yes
 
-  # for socketio
-  - name: apt-get python-greenlet-dev
-    apt: name=python-greenlet-dev
-    sudo: yes
-
+  # python language bindings for ev3 (see https://github.com/rhempel/ev3dev-lang-python)
   - name: easy_install python-ev3dev
     easy_install: name=python-ev3dev
+    sudo: yes
+
+  # for socketio
+  - name: apt-get python-greenlet
+    apt: name=python-greenlet
     sudo: yes
