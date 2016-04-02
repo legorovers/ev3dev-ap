@@ -1,25 +1,74 @@
----
+- name: apt-get nginx-common
+  apt: name=nginx-common
+  become: yes
 
-  - name: apt-get git
-    apt: name=git
-    sudo: yes
+- name: disable IPv6, as it's not enabled
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    regexp: '^\t(# )?listen \[::\]:80'
+    line: "\t# listen [::]:80 default_server;"
+  become: yes
 
-  # for socketio -- also brings in openssl and greenlet
-  - name: apt-get python-gevent
-    apt: name=python-gevent
-    sudo: yes
+- name: apt-get nginx-light
+  apt: name=nginx-light
+  become: yes
 
-  - name: create ev3_py27 virtualenv
-    shell: . /usr/share/virtualenvwrapper/virtualenvwrapper.sh; mkvirtualenv webrover1 --python=/usr/bin/python2.7 --system-site-packages
-      creates=/home/robot/.virtualenvs/webrover1
-    args:
-      executable: /bin/bash
-    register: mkvirtualenv_result
-    failed_when: mkvirtualenv_result.rc != 1 and 'skipped' not in mkvirtualenv_result.stdout
+- file: path=/etc/nginx/ssl
+      state=directory
+  become: yes
 
-  - name: clone the lego rovers website repo
-    git: repo=https://github.com/legorovers/legoflask.git
-       dest=/home/robot/webrover1
+- name: copy SSL private key
+  copy: src=legorover.key dest=/etc/nginx/ssl/
+  become: yes
+  notify: reload nginx
+- name: copy SSL certificate
+  copy: src=legorover.crt dest=/etc/nginx/ssl/
+  become: yes
+  notify: reload nginx
 
-  - name: install website python requirements
-    pip: requirements=/home/robot/webrover1/requirements.txt virtualenv=/home/robot/.virtualenvs/webrover1
+- name: make ideaflip nginx configuration available
+  copy: src=nginx.conf
+      dest=/etc/nginx/sites-available/webrover1
+  become: yes
+  notify: reload nginx
+
+- name: disable default mode
+  file: dest=/etc/nginx/sites-enabled/default
+      state=absent
+  become: yes
+  notify: reload nginx
+
+- name: enable live configuration
+  file: src=/etc/nginx/sites-available/webrover1
+      dest=/etc/nginx/sites-enabled/webrover1
+      state=link
+  become: yes
+  notify: reload nginx
+
+
+# for socketio
+- name: apt-get python-gevent
+  apt: name=python-gevent
+  become: yes
+
+- name: create ev3_py27 virtualenv
+  shell: . /usr/share/virtualenvwrapper/virtualenvwrapper.sh; mkvirtualenv webrover1 --python=/usr/bin/python2.7 --system-site-packages
+    creates=/home/robot/.virtualenvs/webrover1
+  args:
+    executable: /bin/bash
+  register: mkvirtualenv_result
+  failed_when: mkvirtualenv_result.rc != 1 and 'skipped' not in mkvirtualenv_result.stdout
+
+
+- name: apt-get git
+  apt: name=git
+  become: yes
+
+- name: clone the lego rovers website repo
+  git: repo=https://github.com/legorovers/legoflask.git
+     dest=/home/robot/webrover1
+
+- name: install website python requirements
+  pip: requirements=/home/robot/webrover1/requirements.txt virtualenv=/home/robot/.virtualenvs/webrover1
+
+
