@@ -28,8 +28,3 @@
   - name: easy_install python-ev3dev
     easy_install: name=python-ev3dev
     sudo: yes
-
-  # for socketio
-  - name: apt-get python-greenlet
-    apt: name=python-greenlet
-    sudo: yes

@@ -4,8 +4,9 @@
     apt: name=git
     sudo: yes
 
-  - name: apt-get python-openssl
-    apt: name=python-openssl
+  # for socketio -- also brings in openssl and greenlet
+  - name: apt-get python-gevent
+    apt: name=python-gevent
     sudo: yes
 
   - name: create ev3_py27 virtualenv
