@@ -26,7 +26,7 @@
   become: yes
   notify: reload nginx
 
-- name: make ideaflip nginx configuration available
+- name: make webrover1 nginx configuration available
   copy: src=nginx.conf
       dest=/etc/nginx/sites-available/webrover1
   become: yes
@@ -71,4 +71,13 @@
 - name: install website python requirements
   pip: requirements=/home/robot/webrover1/requirements.txt virtualenv=/home/robot/.virtualenvs/webrover1
 
+
+- name: make webrover1 flask server available as a service
+  copy: src=webrover1.systemd
+      dest=/etc/systemd/system/webrover1.service
+  become: yes
+
+- name: start webrover1 flask server available
+  service: name=webrover1 enabled=yes state=started
+  become: yes
 
