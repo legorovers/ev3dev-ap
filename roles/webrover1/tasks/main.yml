@@ -1,3 +1,10 @@
+# sudo vi /etc/apt/sources.list
+# deb http://ftp.debian.org/debian jessie-backports main
+# sudo apt-get update
+# sudo apt-get -t jessie-backports install nginx-full
+# sudo vi /etc/nginx/nginx.conf
+# ssl_prefer_server_ciphers off;
+
 - name: apt-get nginx-common
   apt: name=nginx-common
   become: yes
@@ -9,8 +16,8 @@
     line: "\t# listen [::]:80 default_server;"
   become: yes
 
-- name: apt-get nginx-light
-  apt: name=nginx-light
+- name: apt-get nginx-full
+  apt: name=nginx-full
   become: yes
 
 - file: path=/etc/nginx/ssl
