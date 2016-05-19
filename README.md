@@ -150,3 +150,10 @@ then edit the `hostapd` configuration and restart it
 
     vi /etc/hostapd/hostapd.conf
     service hostapd restart
+
+
+## Wireless Adaptors
+
+
+sudo vi /etc/udev/rules.d/70-persistent-net.rules
+wlan1 wlan0
