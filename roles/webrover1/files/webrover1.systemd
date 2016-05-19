@@ -8,6 +8,7 @@ Type=simple
 User=robot
 Group=robot
 ExecStart=/bin/bash -c '. /home/robot/.virtualenvs/webrover1/bin/activate; cd /home/robot/webrover1; python app/app.py'
+StandardOutput=null
 
 # Give a reasonable amount of time for the server to start up/shut down
 TimeoutSec=30
