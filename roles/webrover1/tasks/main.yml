@@ -5,6 +5,10 @@
 # sudo vi /etc/nginx/nginx.conf
 # ssl_prefer_server_ciphers off;
 
+# sudo vi /etc/systemd/journald.conf
+# Storage=none
+# sudo systemctl restart systemd-journald
+
 - name: apt-get nginx-common
   apt: name=nginx-common
   become: yes
